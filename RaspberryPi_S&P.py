@@ -23,6 +23,7 @@ def custom_callback_fire(client, userdata, message):
     # by activating the arduino
     if state == 1:
         print("Fired")
+        client.publish("avipi/targetAcquired", "target lost")
     elif state == 0:
         print("No target in range")
    
