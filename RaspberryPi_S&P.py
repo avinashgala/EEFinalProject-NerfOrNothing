@@ -22,10 +22,9 @@ def custom_callback_fire(client, userdata, message):
     #If the word fire is typed from the laptop publisher, we fire one bullet
     # by activating the arduino
     if state == 1:
-        print("Fired")
-        client.publish("avipi/targetAcquired", "target lost")
+        client.publish("avipi/Hit", "Hostile Destroyed")
     elif state == 0:
-        print("No target in range")
+        client.publish("avipi/Hit", "No Target in Range")
    
 
 def on_connect(client, userdata, flags, rc): #When the rpi connects to the server, it should print the success message

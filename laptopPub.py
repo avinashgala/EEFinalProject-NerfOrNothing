@@ -7,47 +7,25 @@ import paho.mqtt.client as mqtt
 import time
 from pynput import keyboard
 
-def on_connect(client, userdata, flags, rc): #print a message if we connect successfully
-    print("Connected to server (i.e., broker) with result code "+str(rc))
+def custom_callback_Hit(client, userdata, message):
+    print(message)
 
-    #subscribe to topics of interest here
-    #we don't subscribe to topics here since this is a publisher
-#Default message callback. Please use custom callbacks.
+def custom_callback_targetAcquired(client, userdata, message):
+    print(message)
+    
+def on_connect(client, userdata, flags, rc): #prints a message if server connection success
+    print("Connected to server (i.e., broker) with result code "+str(rc))
+    client.message_callback_add("avipi/Hit", custom_callback_Hit) #adds the custom callbacks for
+    client.message_callback_add("avipi/targetAcquired", custom_callback_targetAcquired) #both of these topics
+
+    #subscribe to the ultrasonic ranger topic here
+    client.subscribe("avipi/Hit") #Then subscribes to both topics to be ready for when the pi publishes
+    client.subscribe("avipi/targetAcquired")
+
 def on_message(client, userdata, msg): #this is not used in the context of this lab, publisher should not receive messages
     print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
-"""
-def on_press(key): #if a key is pressed
-    try: 
-        k = key.char # single-char keys
-    except: 
-        k = key.name # other keys
-    
-    if k == 'w':  #if w a s d are pressed, we print it to the vm and publish it to the topic "avipi/lcd"
-        print("w")  #additionally, if a or d are pressed, we publish LED_ON or LED_OFF to topic avipi/led
-        client.publish("avipi/lcd", k)
-        #send "w" character to rpi
-    elif k == 'a':
-        print("a")
-        # send "a" character to rpi
-        #send "LED_ON"
-        client.publish("avipi/lcd", k)
-        client.publish("avipi/led", "LED_ON")
-    elif k == 's':
-        print("s")
-        client.publish("avipi/lcd", k)
-        # send "s" character to rpi
-    elif k == 'd':
-        print("d")
-        # send "d" character to rpi
-        # send "LED_OFF"
-        client.publish("avipi/lcd", k)
-        client.publish("avipi/led", "LED_OFF")
-"""
 
 if __name__ == '__main__':
-    #setup the keyboard event listener
-    lis = keyboard.Listener(on_press=on_press)
-    lis.start() # start to listen on a separate thread
     
     #this section is covered in publisher_and_subscriber_example.py
     client = mqtt.Client()
@@ -62,5 +40,7 @@ if __name__ == '__main__':
         value = input()
         if value == "fire" or value == "warn":
             client.publish("avipi/fire", value)
+        else:
+            print("Invalid command")
         value = ""        
 
