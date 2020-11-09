@@ -15,7 +15,7 @@ import multiprocessing      #I created both a normal lock and an i2c reentrant l
 import threading            #very strange issues (including a race condition)
 lock = threading.Lock()     #although I dont use both in the code, I see no reason to delete them
 i2c_lock = multiprocessing.RLock()
-int state = 0
+state = 0
 
 
 def custom_callback_fire(client, userdata, message):  
@@ -60,7 +60,7 @@ if __name__ == '__main__':
                     while True:
                         ultrasonic_value = grovepi.ultrasonicRead(ultrasonic_ranger) #reads a value from ultrasonic
                         if ultrasonic_value > 350:
-                            state = 0;
+                            state = 0
                             client.publish("avipi/targetAcquired", "target lost")
                             break
             except KeyboardInterrupt: #These are some exceptions that were used in testing. They do not do anything.
