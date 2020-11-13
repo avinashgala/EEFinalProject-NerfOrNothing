@@ -41,6 +41,7 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == '__main__':
+    print("test")
     ultrasonic_ranger = 4 #sets the pin for the ultrasonic, button, and led, and the initial state of the rgb and button
     client = mqtt.Client()  #starts client as the client
     client.on_message = on_message #primes the client for responding to a connection or message
