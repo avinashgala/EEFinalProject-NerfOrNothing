@@ -8,11 +8,14 @@ import time
 from pynput import keyboard
 
 def custom_callback_Hit(client, userdata, message):
-    print(message)
+    s = str(message.payload, "utf-8")
+    print(s)
+    
 
 def custom_callback_targetAcquired(client, userdata, message):
-    print(message)
-    
+    s = str(message.payload, "utf-8")
+    print(s)
+
 def on_connect(client, userdata, flags, rc): #prints a message if server connection success
     print("Connected to server (i.e., broker) with result code "+str(rc))
     client.message_callback_add("avipi/Hit", custom_callback_Hit) #adds the custom callbacks for
