@@ -52,6 +52,7 @@ if __name__ == '__main__':
         with i2c_lock: #locks the grovepi functions to prevent race condition
             try:
                 ultrasonic_value = grovepi.ultrasonicRead(ultrasonic_ranger) #reads a value from ultrasonic
+                print(str(ultrasonic_value))
                 if ultrasonic_value < 200:
                     state = 1
                     sensorstring = str(ultrasonic_value) #converts it to a string for consistency
