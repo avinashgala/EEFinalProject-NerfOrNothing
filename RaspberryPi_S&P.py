@@ -8,6 +8,15 @@ sys.path.append('../../Software/Python/grove_rgb_lcd')
 import paho.mqtt.client as mqtt
 import time
 
+import RPi.GPIO as GPIO
+
+servoPIN = 17
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
+
+p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+p.start(2.5) # Initialization
+
 import grovepi
 from grove_rgb_lcd import *
 
@@ -22,6 +31,9 @@ def custom_callback_fire(client, userdata, message):
     #If the word fire is typed from the laptop publisher, we fire one bullet
     # by activating the arduino
     if state == 1:
+        p.ChangeDutyCycle(3.5)
+        time.sleep(0.5)
+        p.ChangeDutyCycle(2.5)
         client.publish("avipi/Hit", "Hostile Destroyed")
     elif state == 0:
         client.publish("avipi/Hit", "No Target in Range")
