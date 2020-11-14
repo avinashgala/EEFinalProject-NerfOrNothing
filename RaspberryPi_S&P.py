@@ -31,7 +31,7 @@ def custom_callback_fire(client, userdata, message):
     #If the word fire is typed from the laptop publisher, we fire one bullet
     # by activating the arduino
     if state == 1:
-        p.ChangeDutyCycle(3.5)
+        p.ChangeDutyCycle(4.0)
         time.sleep(0.5)
         p.ChangeDutyCycle(2.5)
         client.publish("avipi/Hit", "Hostile Destroyed")
