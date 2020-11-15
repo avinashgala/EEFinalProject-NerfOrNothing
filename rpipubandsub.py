@@ -45,6 +45,7 @@ def custom_callback_fire(client, userdata, message):
                 grovepi.digitalWrite(led, 1)
                 time.sleep(1)
                 grovepi.digitalWrite(led, 0)
+                time.sleep(1)
                 count = count - 1
             grovepi.digitalWrite(buzzer, 0)
     elif state == 0:
