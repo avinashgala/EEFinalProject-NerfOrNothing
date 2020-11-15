@@ -28,13 +28,14 @@ led = 3
 
 
 def custom_callback_fire(client, userdata, message):  
+    s = str(message.payload, "utf-8")
     if state == 1:
-        if message == "fire":
+        if s == "fire":
             p.ChangeDutyCycle(4.0)
             time.sleep(0.5)
             p.ChangeDutyCycle(2.5)
             client.publish("avipi/Hit", "Hostile Destroyed")
-        elif message == "warn":
+        elif s == "warn":
             grovepi.digitalWrite(buzzer, 1)
             count = 5
             while count != 0:
