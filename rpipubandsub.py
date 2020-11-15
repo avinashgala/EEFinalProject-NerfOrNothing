@@ -23,6 +23,8 @@ lock = threading.Lock()
 i2c_lock = multiprocessing.RLock()
 state = 0
 
+grovepi.pinMode(buzzer,"OUTPUT")
+grovepi.pinMode(led,"OUTPUT")
 buzzer = 8
 led = 3
 
@@ -42,6 +44,7 @@ def custom_callback_fire(client, userdata, message):
                 grovepi.digitalWrite(led, 1)
                 time.sleep(1)
                 grovepi.digitalWrite(led, 0)
+                count = count - 1
             grovepi.digitalWrite(buzzer, 0)
     elif state == 0:
         client.publish("avipi/Hit", "No Target in Range")
