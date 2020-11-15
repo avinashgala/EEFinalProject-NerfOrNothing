@@ -23,10 +23,11 @@ lock = threading.Lock()
 i2c_lock = multiprocessing.RLock()
 state = 0
 
-grovepi.pinMode(buzzer,"OUTPUT")
-grovepi.pinMode(led,"OUTPUT")
+
 buzzer = 8
 led = 3
+grovepi.pinMode(buzzer,"OUTPUT")
+grovepi.pinMode(led,"OUTPUT")
 
 
 def custom_callback_fire(client, userdata, message):  
